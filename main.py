@@ -3,8 +3,15 @@ from urllib import unquote
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
+import gdata.urlfetch
+import gdata.service
+
 import lastfm
 import lyricswiki
+import youtube
+
+gdata.service.http_request_handler = gdata.urlfetch
+webapp.template.register_template_library('template_helper')
 
 class BaseHandler(webapp.RequestHandler):
   def display_error(self, error_msg):
@@ -42,24 +49,26 @@ class SongHandler(BaseHandler):
   "Handle for specified song page request (/_/artist+name/song+name)"
 
   def get(self, artist, song):
-    "Display lyric of this song"
-    try:
+#    "Display lyric of this song"
+#    try:
       if artist.find('%20') != -1 or song.find('%20') != -1:
         # url contains space, redirect to correct url with + instead of space
         self.redirect('/_/%s/%s' % (artist.replace('%20','+'), song.replace('%20','+')))
       artist = unicode(unquote(artist), 'utf-8').replace('+',' ')
       song = unicode(unquote(song), 'utf-8').replace('+',' ')
+      similar_tracks = lastfm.get_similar_tracks(artist, song)
       template_values = {
         'song': song,
         'artist': artist,
         'lyric': lyricswiki.get_lyric(artist, song),
-        'related_songs': lastfm.get_similar_tracks(artist, song)[:5]
+        'related_songs': similar_tracks[:5] if similar_tracks else None,
+        'video': youtube.search('%s %s' % (song, artist))
       }
       path = os.path.join(os.path.dirname(__file__), 'templates/song.html')
       self.response.out.write(template.render(path, template_values))
-    except Exception, ex:
-      error_msg = 'Something really bad happened!'
-      self.display_error(error_msg)
+#    except Exception, ex:
+#      error_msg = 'Something really bad happened!'
+#      self.display_error(error_msg)
 
 class ArtistHandler(BaseHandler):
   "Handle for artist page request (/_/artist+name)."
@@ -96,8 +105,6 @@ application = webapp.WSGIApplication([(r'/_/([^/]*)/([^/]*)', SongHandler),
 
 def main():
   run_wsgi_app(application)
-
-webapp.template.register_template_library('template_helper')
 
 if __name__ == "__main__":
   main()

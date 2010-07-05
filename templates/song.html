@@ -1,2 +1,16 @@
 {% extends "base_layout.html" %}
 
+{% block player %}
+{% if video %}
+<div id="player" class="inner-block">
+  <h3> This song on YouTube </h3>
+  <div class="inner-block-main">
+    <object width="480" height="360">
+      <param name="movie" value="{{ video.swf_url }}"></param>
+      <param name="wmode" value="transparent"></param>
+      <embed src="{{ video.swf_url }}" type="application/x-shockwave-flash" wmode="transparent" width="480" height="360"></embed>
+    </object>
+  </div>
+</div>
+{% endif %}
+{% endblock player %}

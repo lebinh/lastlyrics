@@ -1,7 +1,7 @@
 from urllib import quote
+from datetime import datetime
 from google.appengine.api import urlfetch
 from BeautifulSoup import BeautifulSoup
-from datetime import datetime
 
 class LastfmError(Exception):
   def  __init__(self, error_response):
@@ -59,4 +59,4 @@ def get_similar_tracks(artist, song):
       return res
     return [parse_track_tag(track) for track in soup.findAll('track')]
   else:
-    print response.content
+    return None
