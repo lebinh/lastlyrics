@@ -1,0 +1,29 @@
+{% extends "base_layout.html" %}
+
+{% block header %}
+  <h1>{{ song|link_to_song:artist }}</h1>
+  <h2>
+    <span style="font-style: italic; font-size: 0.7em; color: #bbb;">by</span>
+    {{ artist|link_to_artist }}
+  </h2>
+  <div id="info">
+    ___ &nbsp; is {{ username|link_to_lastfm_user }}'s most recent track &nbsp; ___ <br />
+  </div>
+{% endblock %}
+
+{% block related %}
+{% if related_songs %}
+<div id="related-songs">
+  {% block related_songs_header %}
+    <h3>Other recently listened songs</h3>
+  {% endblock related_songs_header %}
+  <ul>
+    {% for song in related_songs %}
+      <li>
+        {{ song.name|link_to_song:song.artist }} <span style="font-style: italic;">by</span> {{ song.artist|link_to_artist }}{% if song.time %}, {{ song.time|timesince }} ago {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock related %}

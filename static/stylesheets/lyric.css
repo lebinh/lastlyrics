@@ -1,0 +1,111 @@
+body {
+	color: #32312F;
+	background-color: #E2E1DE;
+	font: normal 1em/1.5 Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif !important;
+ 	margin: 0;
+}
+#main {
+  width: 648px;
+	margin: 0 auto;
+	background: url(/images/paper.png) no-repeat right top;
+}
+#inner {
+	width: 600px;
+	min-height: 480px;
+	margin: 44px auto;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
+	background: #f9f9f9 url(/images/master.jpg) repeat-y 0 0;
+}
+a {
+  text-decoration: none;
+  color: #c00906;
+}
+a:hover, a:focus {
+  border-bottom: 1px dotted #bbb;
+  color: #333;
+}
+a.outlink {
+  background: url('/images/link-out.gif') center right no-repeat;
+  padding-right: 12px;
+}
+#header {
+  padding: 30px 30px 30px 40px;
+}
+#header a {
+  color: #333;
+}
+#header a:hover {
+  color: #c00906;
+}
+#header h1 {
+  font-size: 3.3em;
+  line-height: 1;
+}
+#header h2 {
+  font-size: 2em;
+  line-height: 1.5;
+}
+#info {
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+}
+#info a {
+  font-size: 1.1em;
+  font-style: normal;
+  color: #666;
+}
+#info a:hover {
+  color: #c00906;
+}
+
+#lyric {
+  padding: 10px 25px 30px 70px;
+}
+#related-songs {
+  color: #999;
+  margin: 0 20px 0;
+  padding: 20px 20px 30px;
+  border-top: 1px dotted #999;
+}
+#related-songs h3 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+#related-songs a {
+  color: #333;
+}
+#related-songs a:hover {
+  color: #c00906;
+}
+#related-songs ul a {
+  font-size: 1.2em;
+}
+#related-songs ul li {
+  font-size: 0.8em;
+  padding: 5px 25px;
+}
+
+#footer {
+  color: #666;
+  text-align: center;
+  font: 0.8em 'Lucida Grande', Lucida, Verdana, sans-serif;
+  padding-bottom: 50px;
+}
+#footer a {
+  color: #c00906;
+}
+#footer a:hover, a:focus {
+  color: #333;
+}
+.bqstart {
+  float: left;
+  height: 45px;
+  margin-left: -40px;
+  margin-top: -70px;
+  font-size: 10em;
+  color: #ccc;
+}

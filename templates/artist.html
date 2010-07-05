@@ -1,0 +1,32 @@
+{% extends "base_layout.html" %}
+
+{% block title %} {{ artist }} - NowLyrics {% endblock %}
+
+{% block header %}
+<h1>{{ song|link_to_song:artist }}</h1>
+<h2>
+  <span style="font-style: italic; font-size: 0.7em; color: #bbb;">is</span>
+  {{ artist|link_to_lastfm_artist }}
+  <span style="font-style: italic; font-size: 0.7em; color: #bbb;">'s</span>
+</h2>
+<div id="info">
+  ___ most popular song, according to last.fm ___
+</div>
+{% endblock %}
+
+{% block related %}
+{% if related_songs %}
+<div id="related-songs">
+  {% block related_songs_header %}
+    <h3>Other {{artist|link_to_lastfm_artist}}'s popular songs</h3>
+  {% endblock related_songs_header %}
+  <ul>
+    {% for song in related_songs %}
+      <li>
+        {{ song.name|link_to_song:artist }}, with {{ song.listeners }} listeners.
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock related %}

@@ -1,0 +1,85 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=480, user-scalable=no"/>
+  <link rel="SHORTCUT ICON" href="/favicon.ico"/>
+  <title>{% block title %} {{ song }} by {{ artist }} - NowLyrics {% endblock %}</title>
+  <link rel="stylesheet" href="/stylesheets/reset.css" type="text/css">
+  <link rel="stylesheet" href="/stylesheets/lyric.css" type="text/css">	
+
+</head>
+<body>
+
+<div id="main">
+
+  <div id="inner">
+
+    <div id="header">
+      {% block header %}
+      <h1>{{ song|link_to_lastfm_song:artist }}</h1>
+      <h2>
+        <span style="font-style: italic; font-size: 0.7em; color: #bbb;">by</span>
+        {{ artist|link_to_artist }}
+      </h2>
+      {% endblock header %}
+    </div>
+    
+    {% block lyric %}
+    <div id="lyric">
+      <blockquote>
+        <span class="bqstart">&#8220;</span>
+        {% if lyric %}
+          {{ lyric|linebreaksbr }}
+        {% else %}
+          The answer, my friend, is blowin' in the wind <br />
+          <a href="http://www.google.com/search?q={{artist}} {{song}} lyrics">
+            The lyrics
+          </a>
+          is blowin' in the wwwind...
+        {% endif %}
+      </blockquote>
+      {% block player %}
+      {% endblock player %}
+    </div>
+    {% endblock lyric %}
+    
+    {% block related %}
+    {% if related_songs %}
+    <div id="related-songs">
+      {% block related_songs_header %}
+        <h3>You may also like</h3>
+      {% endblock related_songs_header %}
+      <ul>
+        {% for song in related_songs %}
+          <li>
+            {{ song.name|link_to_song:song.artist }} by {{ song.artist|link_to_artist }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% endblock related %}
+
+  </div>
+
+  <div id="footer">
+    Made by <a href="http://www.last.fm/user/lebinhit">Le Binh</a>.
+    Tweet at <a href="https://twitter.com/nowlyricsapp">@nowlyrics</a>.
+    Powered by <a href="http://www.last.fm/">Last.fm</a> and <a href="http://lyrics.wikia.com/">LyricWiki</a>. 
+  </div>
+
+</div>
+
+	<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-331203-4");
+pageTracker._trackPageview();
+} catch(err) {}
+  </script>
+
+</body>
+</html>

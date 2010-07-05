@@ -1,0 +1,25 @@
+application: nowlyrics
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /
+  static_files: index.html
+  upload: index.html
+  
+- url: /stylesheets
+  static_dir: static/stylesheets
+  
+- url: /images
+  static_dir: static/images
+
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
+- url: /.+
+  script: main.py
+  
+derived_file_type:
+- python_precompiled
