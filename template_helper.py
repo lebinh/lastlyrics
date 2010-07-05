@@ -5,9 +5,7 @@ register = webapp.template.create_template_register()
 def quote(s):
   return s.replace(' ','+')
 
-def a_tag(url, text=None, outlink=False):
-  if not text:
-    text = url
+def a_tag(url, text, outlink=False):
   if outlink:
     return '<a href="%s" class="outlink">%s</a>' % (url, text)
   else:
@@ -38,4 +36,3 @@ register.filter(link_to_song)
 register.filter(link_to_lastfm_user)
 register.filter(link_to_lastfm_artist)
 register.filter(link_to_lastfm_song)
-

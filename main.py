@@ -7,16 +7,20 @@ import lastfm
 import lyricswiki
 
 class BaseHandler(webapp.RequestHandler):
+  def render_template(name, values):
+    path = os.path.join(os.path.dirname(__file__), 'templates/%s.html' % name)
+    self.response.out.write(template.render(path, values))
+    
   def display_error(self, error_msg):
     error_msg = error_msg.replace('\n', '<br />')
-    path = os.path.join(os.path.dirname(__file__), 'templates/error.html')
-    self.response.out.write(template.render(path, {'error_msg': error_msg}))
+    self.render_template('error', {'error_msg': error_msg})
+    
+  def internal_error():
+    self.display_error('Something really bad happened!')
+
 
 class LastfmUserHandler(BaseHandler):
-  "Handle for user page request (/username)"
-
   def get(self, username):
-    "Display lyric of this user most recent track"
     try:
       tracks = lastfm.get_recent_tracks(username)
       template_values = {
@@ -26,23 +30,19 @@ class LastfmUserHandler(BaseHandler):
         'lyric': lyricswiki.get_lyric(tracks[0]['artist'], tracks[0]['name']),
         'related_songs': tracks[1:]
       }
-      path = os.path.join(os.path.dirname(__file__), 'templates/user.html')
-      self.response.out.write(template.render(path, template_values))
+      self.render_template('user', template_values)
     except lastfm.LastfmError, ex:
       error_msg = 'Error while trying to get info of user "%s" from Last.fm:\n %s' % (username, ex.error_msg)
       self.display_error(error_msg)
     except lyricswiki.URLFetchError, ex:
-      error_msg = 'Error while trying to fetch url: %s\nHTTP status code: %d' % (ex.url, ex.code)
+      error_msg = 'Error while trying to get the lyric!'
       self.display_error(error_msg)
     except Exception, ex:
-      error_msg = 'Something really bad happened!'
-      self.display_error(error_msg)
+      self.internal_error()
+
 
 class SongHandler(BaseHandler):
-  "Handle for specified song page request (/_/artist+name/song+name)"
-
   def get(self, artist, song):
-    "Display lyric of this song"
     try:
       if artist.find('%20') != -1 or song.find('%20') != -1:
         # url contains space, redirect to correct url with + instead of space
@@ -55,17 +55,13 @@ class SongHandler(BaseHandler):
         'lyric': lyricswiki.get_lyric(artist, song),
         'related_songs': lastfm.get_similar_tracks(artist, song)[:5]
       }
-      path = os.path.join(os.path.dirname(__file__), 'templates/song.html')
-      self.response.out.write(template.render(path, template_values))
+      self.render_template('song', template_values)
     except Exception, ex:
-      error_msg = 'Something really bad happened!'
-      self.display_error(error_msg)
+      self.internal_error()
+
 
 class ArtistHandler(BaseHandler):
-  "Handle for artist page request (/_/artist+name)."
-
   def get(self, artist):
-    "Display lyric of this artist most played track"
     try:
       if artist.find('%20') != -1:
         # url contains space, redirect to correct url with + instead of space
@@ -78,15 +74,15 @@ class ArtistHandler(BaseHandler):
         'lyric': lyricswiki.get_lyric(artist, tracks[0]['name']),
         'related_songs': tracks[1:6] 
       }
-      path = os.path.join(os.path.dirname(__file__), 'templates/artist.html')
-      self.response.out.write(template.render(path, template_values))
+      self.render_template('artist', template_values)
     except Exception, ex:
-      error_msg = 'Something really bad happened!'
-      self.display_error(error_msg)
+      self.internal_error()
+
 
 class NotFoundHanlder(BaseHandler):
   def get(self):
     self.display_error("404 - Page Not Found!")
+
 
 application = webapp.WSGIApplication([(r'/_/([^/]*)/([^/]*)', SongHandler),
                                       (r'/_/([^/]*)', ArtistHandler),

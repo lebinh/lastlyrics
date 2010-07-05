@@ -10,11 +10,13 @@ class Lyric(db.Model):
   song = db.StringProperty(required=True)
   lyric = db.TextProperty(required=True)
 
+
 class URLFetchError(Exception):
   def __init__(self, url, code):
     self.url = url
     self.code = code
-        
+
+
 def get_lyric(artist, song):
   "Search lyrics using lyrics.wikia.com API, return None if cannot find the lyric"
   query = Lyric.all().filter('artist =', artist.lower()).filter('song =', song.lower())
