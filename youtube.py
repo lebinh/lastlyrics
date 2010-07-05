@@ -6,7 +6,7 @@ import gdata.youtube.service
 def search(search_term):
   client = gdata.youtube.service.YouTubeService()
   query = gdata.youtube.service.YouTubeVideoQuery()
-  query.vq = search_term
+  query.vq = search_term.encode('utf-8')
   query.max_results = '1'
   feed = client.YouTubeQuery(query)
   return {

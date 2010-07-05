@@ -14,7 +14,7 @@ gdata.service.http_request_handler = gdata.urlfetch
 webapp.template.register_template_library('template_helper')
 
 class BaseHandler(webapp.RequestHandler):
-  def render_template(name, values):
+  def render_template(self, name, values):
     path = os.path.join(os.path.dirname(__file__), 'templates/%s.html' % name)
     self.response.out.write(template.render(path, values))
     
@@ -22,7 +22,7 @@ class BaseHandler(webapp.RequestHandler):
     error_msg = error_msg.replace('\n', '<br />')
     self.render_template('error', {'error_msg': error_msg})
     
-  def internal_error():
+  def internal_error(self):
     self.display_error('Something really bad happened!')
 
 
@@ -50,7 +50,7 @@ class LastfmUserHandler(BaseHandler):
 
 class SongHandler(BaseHandler):
   def get(self, artist, song):
-    try:
+#    try:
       if artist.find('%20') != -1 or song.find('%20') != -1:
         # url contains space, redirect to correct url with + instead of space
         self.redirect('/_/%s/%s' % (artist.replace('%20','+'), song.replace('%20','+')))
@@ -65,8 +65,8 @@ class SongHandler(BaseHandler):
         'video': youtube.search('%s %s' % (song, artist))
       }
       self.render_template('song', template_values)
-    except Exception, ex:
-      self.internal_error()
+#    except Exception, ex:
+#      self.internal_error()
 
 
 class ArtistHandler(BaseHandler):
