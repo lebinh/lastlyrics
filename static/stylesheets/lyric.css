@@ -64,29 +64,30 @@ a.outlink {
 #lyric {
   padding: 10px 35px 30px 70px;
 }
-#related-songs {
-  color: #999;
+.inner-block {
+  color: ##32312F;
   margin: 0 20px 0;
   padding: 20px 20px 30px;
   border-top: 1px dotted #999;
 }
-#related-songs h3 {
+.inner-block h3 {
   color: #333;
   font-size: 1.5em;
   margin-bottom: 10px;
 }
-#related-songs a {
+.inner-block a {
   color: #333;
 }
-#related-songs a:hover {
+.inner-block a:hover {
   color: #c00906;
 }
-#related-songs ul a {
-  font-size: 1.2em;
+.inner-block-main {
+  padding: 5px 28px;
 }
-#related-songs ul li {
-  font-size: 0.8em;
-  padding: 5px 25px;
+#related-songs .info {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
 }
 
 #footer {

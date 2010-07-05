@@ -3,8 +3,15 @@ from urllib import unquote
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
+import gdata.urlfetch
+import gdata.service
+
 import lastfm
 import lyricswiki
+import youtube
+
+gdata.service.http_request_handler = gdata.urlfetch
+webapp.template.register_template_library('template_helper')
 
 class BaseHandler(webapp.RequestHandler):
   def render_template(name, values):
@@ -49,11 +56,13 @@ class SongHandler(BaseHandler):
         self.redirect('/_/%s/%s' % (artist.replace('%20','+'), song.replace('%20','+')))
       artist = unicode(unquote(artist), 'utf-8').replace('+',' ')
       song = unicode(unquote(song), 'utf-8').replace('+',' ')
+      similar_tracks = lastfm.get_similar_tracks(artist, song)
       template_values = {
         'song': song,
         'artist': artist,
         'lyric': lyricswiki.get_lyric(artist, song),
-        'related_songs': lastfm.get_similar_tracks(artist, song)[:5]
+        'related_songs': similar_tracks[:5] if similar_tracks else None,
+        'video': youtube.search('%s %s' % (song, artist))
       }
       self.render_template('song', template_values)
     except Exception, ex:
@@ -92,8 +101,6 @@ application = webapp.WSGIApplication([(r'/_/([^/]*)/([^/]*)', SongHandler),
 
 def main():
   run_wsgi_app(application)
-
-webapp.template.register_template_library('template_helper')
 
 if __name__ == "__main__":
   main()

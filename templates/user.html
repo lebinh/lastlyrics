@@ -13,17 +13,18 @@
 
 {% block related %}
 {% if related_songs %}
-<div id="related-songs">
-  {% block related_songs_header %}
-    <h3>Other recently listened songs</h3>
-  {% endblock related_songs_header %}
-  <ul>
-    {% for song in related_songs %}
-      <li>
-        {{ song.name|link_to_song:song.artist }} <span style="font-style: italic;">by</span> {{ song.artist|link_to_artist }}{% if song.time %}, {{ song.time|timesince }} ago {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+<div id="related-songs" class="inner-block">
+  <h3>Other recently listened songs</h3>
+  <div class="inner-block-main">
+    <ul>
+      {% for song in related_songs %}
+        <li>
+          {{ song.name|link_to_song:song.artist }} <span class="info">by</span> {{ song.artist|link_to_artist }}
+          {% if song.time %}<span class="info">, {{ song.time|timesince }} ago </span>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 {% endif %}
 {% endblock related %}

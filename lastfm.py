@@ -1,7 +1,7 @@
 from urllib import quote
+from datetime import datetime
 from google.appengine.api import urlfetch
 from BeautifulSoup import BeautifulSoup
-from datetime import datetime
 
 API_ROOT = 'http://ws.audioscrobbler.com/2.0/?api_key=4b07bbcee2b8fc6f56a338ad24cbdedf'
 
@@ -66,4 +66,4 @@ def get_similar_tracks(artist, song):
       }
     return [parse_track_tag(track) for track in soup.findAll('track')]
   else:
-    raise LastfmError(response)
+    return None

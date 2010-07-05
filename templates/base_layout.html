@@ -38,28 +38,31 @@
           is blowin' in the wwwind...
         {% endif %}
       </blockquote>
-      {% block player %}
-      {% endblock player %}
     </div>
     {% endblock lyric %}
-    
+
     {% block related %}
     {% if related_songs %}
-    <div id="related-songs">
+    <div id="related-songs" class="inner-block">
       {% block related_songs_header %}
-        <h3>You may also like</h3>
+        <h3>Songs you may also like</h3>
       {% endblock related_songs_header %}
-      <ul>
-        {% for song in related_songs %}
-          <li>
-            {{ song.name|link_to_song:song.artist }} by {{ song.artist|link_to_artist }}
-          </li>
-        {% endfor %}
+      <div class="inner-block-main">
+        <ul>
+          {% for song in related_songs %}
+            <li>
+              {{ song.name|link_to_song:song.artist }} <span class="info">by</span> {{ song.artist|link_to_artist }}
+            </li>
+          {% endfor %}
       </ul>
+      </div>
     </div>
     {% endif %}
     {% endblock related %}
 
+    {% block player %}
+    {% endblock player %}
+    
   </div>
 
   <div id="footer">
