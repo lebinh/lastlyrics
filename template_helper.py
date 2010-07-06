@@ -10,6 +10,9 @@ def a_tag(url, text, outlink=False):
     return '<a href="%s" class="outlink">%s</a>' % (url, text)
   else:
     return '<a href="%s">%s</a>' % (url, text)
+    
+def outlink(text, url):
+  return a_tag(url, text, True)
  
 def link_to_lastfm_artist(name):
   url = 'http://www.last.fm/music/%s' % quote(name)
@@ -36,3 +39,4 @@ register.filter(link_to_song)
 register.filter(link_to_lastfm_user)
 register.filter(link_to_lastfm_artist)
 register.filter(link_to_lastfm_song)
+register.filter(outlink)

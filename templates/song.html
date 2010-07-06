@@ -10,6 +10,10 @@
       <param name="wmode" value="transparent"></param>
       <embed src="{{ video.swf_url }}" type="application/x-shockwave-flash" wmode="transparent" width="480" height="360"></embed>
     </object>
+    <h4> {{ video.title|outlink:video.page_url }} | {{ video.published }} </h4>
+    <div class="info">
+      {{ video.description|truncatewords:40 }}
+    </div>
   </div>
 </div>
 {% endif %}

@@ -11,6 +11,9 @@ def search(search_term):
   feed = client.YouTubeQuery(query)
   return {
     'title': feed.entry[0].title.text,
+    'page_url': feed.entry[0].media.player.url,
     'swf_url': feed.entry[0].GetSwfUrl(),
-    'description': feed.entry[0].media.description
+    'description': feed.entry[0].media.description,
+    'viewcount': feed.entry[0].statistics.view_count,
+    'published': feed.entry[0].published.text.split('T')[0]
   } if feed.entry else None
