@@ -1,55 +1,156 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=480, user-scalable=no"/>
     <link rel="SHORTCUT ICON" href="favicon.ico"/>
     <title>NowLyrics</title>
-    
+
+    <link rel="stylesheet" href="/stylesheets/reset.css" type="text/css">
     <style type="text/css">
-    html { font-size: 100%; }
-    body{ background: #ffffff; color: #333333; font: normal 1em/1.5 Georgia, serif; margin: 10% 5% 0 5%; text-align: center; }
-    a:link, a:visited, a:active { color: #c00906; text-decoration: none; }
-		a:hover, a:focus { color: #333; }
-    input[type=text]{ border: 1px solid #ccc; color: #ccc; font-size: 0.8em; padding: 4px 6px 4px 6px; }
-    #container{ clear: both; font-size: 2em; margin: auto; }
-    #username_input{ width: 250px; }
+      html { font-size: 18px; }
+      body {
+        background:#c8c8c8 url(/images/bg_content.gif) repeat;
+        color: #333;
+        font-family: Verdana, sans-serif;
+        text-align: center;
+        padding: 100px;
+        line-height: 1.2em;
+      }
+      h1 { font: normal 5em Georgia, serif; padding: 0; margin: 0; }
+      h2 { font: normal 1em Verdana, sans-serif; padding: 0; margin: 0; }
+      #username_input {
+        background: #f9f9f9;
+        font: normal 27px Georgia, serif;
+        border: none;
+        border-bottom: 1px dotted #97b5d2;
+        width: 470px;
+      }
+      #container{ 
+        font-size: 18px;
+        position: relative;
+        width: 488px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #f9f9f9 url(/images/bg_boxbottom.gif) no-repeat center bottom;
+      }
+      #lyric { color: #c00906; font-style: italic; }
+      #footer {
+        color: #333;
+        font-size: 0.8em;
+        width: 488px;
+        margin: 0 auto;
+        padding-bottom: 50px;
+      }
+      #footer a {
+        color: #c00906;
+      }
+      #footer a:hover, a:focus {
+        color: #333;
+      }
+      .emph { font-style: italic; }
+      /* button 
+      ---------------------------------------------- */
+      .button {
+        display: inline-block;
+        zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+        *display: inline;
+        vertical-align: baseline;
+        margin: 0 2px;
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font: 15px/100% Verdana, sans-serif;
+        padding: .5em 2em .55em;
+        text-shadow: 0 1px 1px rgba(0,0,0,.3);
+        -webkit-border-radius: .5em; 
+        -moz-border-radius: .5em;
+        border-radius: .5em;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      }
+      .button:hover {
+        text-decoration: none;
+      }
+      .button:active {
+        position: relative;
+        top: 1px;
+      }
+      .bigrounded {
+        -webkit-border-radius: 2em;
+        -moz-border-radius: 2em;
+        border-radius: 2em;
+      }
+      /* white */
+      .white {
+        color: #606060;
+        border: solid 1px #b7b7b7;
+        background: #fff;
+        background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+        background: -moz-linear-gradient(top,  #fff,  #ededed);
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+      }
+      .white:hover {
+        background: #ededed;
+        background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+        background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+      }
+      .white:active {
+        color: #999;
+        background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+        background: -moz-linear-gradient(top,  #ededed,  #fff);
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+      }
     </style>
 
     <script type="text/javascript">
-    function clearUsernameInput(e) {
-      if (e.cleared) { return; }
-      e.cleared = true;
-      e.value = '';
-      e.style.color = '#000';
-    }
-    function formSubmit() {
-      username = document.getElementById('username_input').value;
-      window.location = '/' + username;
-      return false;
-    }
+      function formSubmit() {
+        username = document.getElementById('username_input').value;
+        window.location = '/' + username;
+        return false;
+      }
     </script>    
   </head>
-  
+
   <body>
-  
-  <div id="container">    
-    <form method="get" name="usernameform" onsubmit="return formSubmit()">
-      What song is
-      <input type="text" name="username" id="username_input" value="username" onclick="clearUsernameInput(this);" />
-      currently
-      <a href="#" onclick="formSubmit();">listening to?</a>
-      <input type="submit" style="display: none;" />
-    </form>
-  </div>
-  
+
+    <div id="header">
+      <h1><span id="now">now</span> <span id="lyric">lyrics</span></h1>
+      <h2>The easiest way to search for lyrics.</h2>
+    </div>
+
+    <div id="container">
+      <form method="get" name="usernameform" onsubmit="return formSubmit()">
+        <label for="username_input">Your LastFM username</label>
+        <input type="text" name="username" id="username_input" placeholder="" autofocus />
+        <input type="submit" style="display: none;" /> 
+        <br />
+        <br />
+        <div align="center">
+          <a href="#" class="button white bigrounded" onclick="formSubmit();">Show me the lyric!</a>
+        </div>
+      </form>
+    </div>
+
+    <div id="footer">
+      NowLyrics is a small app that will automatically get info about your currently playing song from LastFM, search for that song's lyric and then <span class="emph">beautifully</span> present it to you.
+      <br />
+      <br />
+      Made by <a href="http://www.last.fm/user/lebinhit">Le Binh</a>,
+      tweeting at <a href="https://twitter.com/nowlyricsapp">@nowlyricsapp</a>.
+    </div>
+
     <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-331203-4");
-pageTracker._trackPageview();
-} catch(err) {}
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-331203-4");
+        pageTracker._trackPageview();
+      } catch(err) {}
     </script>
   </body>
 </html>   

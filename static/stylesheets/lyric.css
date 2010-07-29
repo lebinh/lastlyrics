@@ -1,6 +1,6 @@
 body {
   color: #32312F;
-  background-color: #E2E1DE;
+  background:#c8c8c8 url(/images/bg_content.gif) repeat;
   font: normal 1em/1.5 Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif !important;
   margin: 0;
 }
@@ -13,9 +13,9 @@ body {
   width: 600px;
   min-height: 480px;
   margin: 44px auto;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 9px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 9px rgba(0, 0, 0, 0.3);
   background: #f9f9f9 url(/images/master.jpg) repeat-y 0 0;
 }
 a {
@@ -93,10 +93,13 @@ a.outlink {
   font-size: 0.9em;
   font-style: italic;
 }
+.inner-block ul li {
+  margin: 10px 0;
+}
 #footer {
   color: #666;
   text-align: center;
-  font: 0.8em 'Lucida Grande', Lucida, Verdana, sans-serif;
+  font: 0.8em Verdana, sans-serif;
   padding-bottom: 50px;
 }
 #footer a {
