@@ -57,13 +57,12 @@ class SongHandler(BaseHandler):
       artist = unicode(unquote(artist), 'utf-8').replace('+',' ')
       song = unicode(unquote(song), 'utf-8').replace('+',' ')
       similar_tracks = lastfm.get_similar_tracks(artist, song)
-      show_video = self.request.get('show_video') == 'true'
       template_values = {
         'song': song,
         'artist': artist,
         'lyric': lyricswiki.get_lyric(artist, song),
         'related_songs': similar_tracks[:5] if similar_tracks else None,
-        'video': youtube.search('%s %s' % (song, artist)) if show_video else None
+        'video': youtube.search('%s %s' % (song, artist))
       }
       self.render_template('song', template_values)
     except Exception, ex:

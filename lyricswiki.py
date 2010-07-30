@@ -46,7 +46,7 @@ def get_lyric(artist, song):
 def parse_lyrics_wikia(url):
   "Get lyric page from lyrics.wikia.com and parse it to get the lyric"
   page = urlfetch.fetch(url)
-  soup = BeautifulSoup(page.content)
+  soup = BeautifulSoup(page.content, convertEntities=BeautifulSoup.HTML_ENTITIES)
   lyric = soup.find('div', 'lyricbox')
   for div in lyric.findAll('div', 'rtMatcher'):
     div.extract()
